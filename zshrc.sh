@@ -51,7 +51,8 @@ function update_current_git_vars() {
         local gitstatus="$__GIT_PROMPT_DIR/dist/build/gitstatus/gitstatus"
         _GIT_STATUS=`${gitstatus}`
     fi
-     __CURRENT_GIT_STATUS=("${(@s: :)_GIT_STATUS}")
+    
+	__CURRENT_GIT_STATUS=("${(@s: :)_GIT_STATUS}")
 	GIT_BRANCH=$__CURRENT_GIT_STATUS[1]
 	GIT_AHEAD=$__CURRENT_GIT_STATUS[2]
 	GIT_BEHIND=$__CURRENT_GIT_STATUS[3]
@@ -64,8 +65,10 @@ function update_current_git_vars() {
 
 git_super_status() {
 	precmd_update_git_vars
-    if [ -n "$__CURRENT_GIT_STATUS" ]; then
+    #if [ -n "$__CURRENT_GIT_STATUS" ]; then
+	if [ "$GIT_BRANCH" != ":" ]; then
 	  STATUS="$ZSH_THEME_GIT_PROMPT_PREFIX$ZSH_THEME_GIT_PROMPT_BRANCH$GIT_BRANCH%f"
+
 	  if [ "$GIT_BEHIND" -ne "0" ]; then
 		  STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_BEHIND$GIT_BEHIND%f"
 	  fi
